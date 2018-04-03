@@ -75,6 +75,14 @@ Pushed 6/6 layers, 100% complete
 Push successful
 ```
 
+Also to show what happens when you tag an imagestream:
+
+```
+[user@localhost deploy]$ oc tag build-namespace/my-app:latest build-namespace/my-app:develop
+Tag build-namespace/my-app:develop set to build-namespace/my-app@sha256:898ab7aff881551ca5e793cbc0bc7ad53d08ec2b4b91bfd4f7e7c191ca7fec63.
+```
+
+Now my-app will be available with the "develop" tag.
 
 ## Actual Template
 
