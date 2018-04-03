@@ -1,0 +1,10 @@
+---
+apiVersion: "v1"
+kind: "Template"
+metadata:
+  name: "fis2-generic-buildtemplate"
+  description: "A simple template for openshift to demonstrate a build and imagestream in a build namespace"
+parameters:
+- description: The name for the application.
+  name: APPLICATION_NAME
+  required: true

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  creationTimestamp: null
+  labels:
+    group: com.nullendpoint
+    project: ${APPLICATION_NAME}
+    provider: fabric8
+    version: 1.0
+  name: ${APPLICATION_NAME}
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: ${APPLICATION_NAME}:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    binary: {}
+    type: Binary
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: fis-java-openshift:2.0
+        namespace: openshift
+    type: Source
+  triggers: []

@@ -1,0 +1,24 @@
+@startuml
+GitServer <-> BuildTool: check out code (branch develop)
+box "BuildServer" #White
+collections BuildTool
+collections ArtifactRepository
+end box
+BuildTool -> BuildTool: Build versioned Jar (mvn clean package)
+BuildTool -> ArtifactRepository: push versioned jar (1.6.7)
+box "OpenShift build-namespace" #White
+collections "buildConfig"
+collections "imageStream"
+end box
+BuildTool -> "buildConfig": oc start-build from-dir=. -w --follow
+activate "buildConfig"
+buildConfig -> buildConfig: build image
+buildConfig -> imageStream: applicationName:latest
+activate "imageStream"
+imageStream -> buildConfig: done
+deactivate "imageStream"
+buildConfig -> BuildTool: done
+deactivate "buildConfig"
+BuildTool -> imageStream: oc tag buildnamespace/applicationName:latest buildnamespace/applicationName:develop
+BuildTool -> imageStream: oc tag buildnamespace/applicationName:latest buildnamespace/applicationName:1.6.7
+@enduml

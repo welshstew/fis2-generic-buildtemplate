@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: Template
+metadata:
+  annotations:
+    maven.fabric8.io/app-catalog: "true"
+  name: fis2-generic-buildtemplate
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    labels:
+      group: com.nullendpoint
+      project: ${APPLICATION_NAME}
+      provider: fabric8
+      version: "1.0"
+    name: ${APPLICATION_NAME}
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      group: com.nullendpoint
+      project: ${APPLICATION_NAME}
+      provider: fabric8
+      version: "1.0"
+    name: ${APPLICATION_NAME}
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: ${APPLICATION_NAME}:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      binary: {}
+      type: Binary
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: fis-java-openshift:2.0
+          namespace: openshift
+      type: Source
+parameters:
+- description: The name for the application.
+  name: APPLICATION_NAME
+  required: true
