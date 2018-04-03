@@ -25,7 +25,7 @@ oc create -f template.yml
 oc new-app --template=fis2-generic-buildtemplate -p APPLICATION_NAME=my-app
 
 # start a new build from the build config.  The build will expect a directory with a full-fat spring-boot jar in it
-oc start-build my-app --from-dir=.
+oc start-build my-app --from-dir=. -w --follow
 
 ```
 
@@ -41,6 +41,39 @@ It is recommended from this point to tag the image as something that better repr
 Please see the below sequence diagram for a visual respresentation:
 
 ![build sequence diagram](./build.png)
+
+
+## Sample Output
+
+```
+[user@localhost deploy]$ oc new-app --template=fis2-generic-buildtemplate -p APPLICATION_NAME=my-app
+--> Deploying template "build-namespace/fis2-generic-buildtemplate" to project build-namespace
+
+     * With parameters:
+        * APPLICATION_NAME=my-app
+
+--> Creating resources ...
+    imagestream "my-app" created
+    buildconfig "my-app" created
+--> Success
+    Use 'oc start-build my-app' to start a build.
+    Run 'oc status' to view your app.
+[user@localhost deploy]$ oc start-build my-app --from-dir=. -w --follow
+Uploading directory "." as binary input for the build ...
+build "my-app-1" started
+Receiving source from STDIN as archive ...
+==================================================================
+Starting S2I Java Build .....
+S2I source build with plain binaries detected
+Copying binaries from /tmp/src to /deployments ...
+... done
+Pushing image 172.30.1.1:5000/build-namespace/my-app:latest ...
+Pushed 3/6 layers, 51% complete
+Pushed 4/6 layers, 78% complete
+Pushed 5/6 layers, 95% complete
+Pushed 6/6 layers, 100% complete
+Push successful
+```
 
 
 ## Actual Template
