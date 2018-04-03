@@ -100,6 +100,7 @@ objects:
     labels:
       group: com.nullendpoint
       project: ${APPLICATION_NAME}
+      app: ${APPLICATION_NAME}
       provider: fabric8
       version: "1.0"
     name: ${APPLICATION_NAME}
@@ -109,6 +110,7 @@ objects:
     labels:
       group: com.nullendpoint
       project: ${APPLICATION_NAME}
+      app: ${APPLICATION_NAME}
       provider: fabric8
       version: "1.0"
     name: ${APPLICATION_NAME}
